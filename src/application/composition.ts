@@ -5,6 +5,8 @@ import {
   listLogEntriesForDayUseCase,
   logFoodItemUseCase,
 } from "./usecases";
+import { LocalFoodItemRepository } from "../infrastructure/persistence/LocalFoodItemRepository";
+import { LocalLogEntryRepository } from "../infrastructure/persistence/LocalLogEntryRepository";
 
 export interface CompositionRoot {
   createFoodItem: ReturnType<typeof createFoodItemUseCase>;
@@ -26,4 +28,10 @@ export function createCompositionRoot(
     getLoggedNutritionForEntry:
       getLoggedNutritionForEntryUseCase(foodItemRepository),
   };
+}
+
+export function createDefaultCompositionRoot(): CompositionRoot {
+  const foodItemRepository = new LocalFoodItemRepository();
+  const logEntryRepository = new LocalLogEntryRepository();
+  return createCompositionRoot(foodItemRepository, logEntryRepository);
 }
