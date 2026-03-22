@@ -7,11 +7,11 @@ export type DomainErrorCode =
   | "FOOD_ITEM_ID_MISMATCH";
 
 export class DomainError extends Error {
-  constructor(
-    readonly code: DomainErrorCode,
-    message: string,
-  ) {
+  readonly code: DomainErrorCode;
+
+  constructor(code: DomainErrorCode, message: string) {
     super(message);
+    this.code = code;
     this.name = "DomainError";
     Object.setPrototypeOf(this, DomainError.prototype);
   }
