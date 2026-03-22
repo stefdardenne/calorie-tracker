@@ -2,13 +2,29 @@ import type { IsoDateTime, LogEntry } from "../../domain/models";
 import type { LogEntryRepository } from "../ports";
 
 function toDayRange(date: Date): { from: IsoDateTime; to: IsoDateTime } {
-  const year = date.getUTCFullYear();
-  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-  const day = String(date.getUTCDate()).padStart(2, "0");
+  const startOfLocalDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    0,
+    0,
+    0,
+    0,
+  );
+
+  const endOfLocalDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    23,
+    59,
+    59,
+    999,
+  );
 
   return {
-    from: `${year}-${month}-${day}T00:00:00.000Z`,
-    to: `${year}-${month}-${day}T23:59:59.999Z`,
+    from: startOfLocalDay.toISOString(),
+    to: endOfLocalDay.toISOString(),
   };
 }
 
