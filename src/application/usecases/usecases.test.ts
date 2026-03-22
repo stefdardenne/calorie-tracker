@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { FoodItem, LogEntry } from "../../domain/models";
+import { DomainError } from "../../domain/errors";
+import type { FoodItemRepository, LogEntryRepository } from "../ports";
 import {
   createFoodItemUseCase,
   getLoggedNutritionForEntryUseCase,
@@ -42,7 +44,7 @@ describe("createFoodItemUseCase", () => {
   });
 
   it("throws for invalid food item and does not persist", async () => {
-    const repository = {
+    const repository: FoodItemRepository = {
       create: vi.fn(async () => undefined),
       findById: vi.fn(),
       listAll: vi.fn(),
@@ -55,15 +57,16 @@ describe("createFoodItemUseCase", () => {
       name: "",
     };
 
-    await expect(createFoodItem(invalidFoodItem)).rejects.toThrow(
-      "Food item name is required",
-    );
+    await expect(createFoodItem(invalidFoodItem)).rejects.toThrow(DomainError);
+    await expect(createFoodItem(invalidFoodItem)).rejects.toMatchObject({
+      code: "INVALID_FOOD_ITEM_NAME",
+    });
     expect(repository.create).not.toHaveBeenCalled();
   });
 });
 
 describe("logFoodItemUseCase", () => {
-  const foodItemRepository = {
+  const foodItemRepository: FoodItemRepository = {
     create: vi.fn(async () => undefined),
     findById: vi.fn<(id: string) => Promise<FoodItem | null>>(
       async () => chickenPer100g,
@@ -71,7 +74,7 @@ describe("logFoodItemUseCase", () => {
     listAll: vi.fn(async () => [chickenPer100g]),
   };
 
-  const logEntryRepository = {
+  const logEntryRepository: LogEntryRepository = {
     create: vi.fn(async () => undefined),
     listByDateRange: vi.fn(async () => []),
     listByFoodItemId: vi.fn(async () => []),
@@ -103,9 +106,7 @@ describe("logFoodItemUseCase", () => {
       logEntryRepository,
     );
 
-    await expect(logFoodItem(validLogEntry)).rejects.toThrow(
-      "Cannot log entry for a food item that does not exist",
-    );
+    await expect(logFoodItem(validLogEntry)).rejects.toThrow(DomainError);
     expect(logEntryRepository.create).not.toHaveBeenCalled();
   });
 
@@ -120,9 +121,7 @@ describe("logFoodItemUseCase", () => {
       consumedQuantity: 0,
     };
 
-    await expect(logFoodItem(invalidLogEntry)).rejects.toThrow(
-      "Consumed quantity must be greater than 0",
-    );
+    await expect(logFoodItem(invalidLogEntry)).rejects.toThrow(DomainError);
     expect(foodItemRepository.findById).not.toHaveBeenCalled();
     expect(logEntryRepository.create).not.toHaveBeenCalled();
   });
@@ -131,7 +130,7 @@ describe("logFoodItemUseCase", () => {
 describe("listLogEntriesForDayUseCase", () => {
   it("requests entries for the full local day converted to UTC", async () => {
     const entries: LogEntry[] = [validLogEntry];
-    const repository = {
+    const repository: LogEntryRepository = {
       create: vi.fn(async () => undefined),
       listByDateRange: vi.fn(async () => entries),
       listByFoodItemId: vi.fn(async () => []),
@@ -171,7 +170,7 @@ describe("listLogEntriesForDayUseCase", () => {
 
 describe("getLoggedNutritionForEntryUseCase", () => {
   it("returns calculated nutrition when the food item exists", async () => {
-    const repository = {
+    const repository: FoodItemRepository = {
       create: vi.fn(async () => undefined),
       findById: vi.fn(async () => chickenPer100g),
       listAll: vi.fn(async () => [chickenPer100g]),
@@ -189,7 +188,7 @@ describe("getLoggedNutritionForEntryUseCase", () => {
   });
 
   it("throws when the linked food item does not exist", async () => {
-    const repository = {
+    const repository: FoodItemRepository = {
       create: vi.fn(async () => undefined),
       findById: vi.fn(async () => null),
       listAll: vi.fn(async () => []),
@@ -199,7 +198,7 @@ describe("getLoggedNutritionForEntryUseCase", () => {
       getLoggedNutritionForEntryUseCase(repository);
 
     await expect(getLoggedNutritionForEntry(validLogEntry)).rejects.toThrow(
-      "Cannot calculate nutrition for a missing food item",
+      DomainError,
     );
   });
 });

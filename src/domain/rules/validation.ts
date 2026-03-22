@@ -1,12 +1,20 @@
 import type { FoodItem, LogEntry, Macros } from "../models";
+import { DomainError } from "../errors";
+import { isValidIsoDateTime } from "./isoDateTimeValidator";
 
 export function assertValidFoodItem(foodItem: FoodItem): void {
   if (foodItem.name.trim().length === 0) {
-    throw new Error("Food item name is required");
+    throw new DomainError(
+      "INVALID_FOOD_ITEM_NAME",
+      "Food item name is required",
+    );
   }
 
   if (foodItem.baseQuantity <= 0) {
-    throw new Error("Food item baseQuantity must be greater than 0");
+    throw new DomainError(
+      "INVALID_BASE_QUANTITY",
+      "Food item baseQuantity must be greater than 0",
+    );
   }
 
   assertValidMacros(foodItem);
@@ -14,17 +22,26 @@ export function assertValidFoodItem(foodItem: FoodItem): void {
 
 export function assertValidLogEntry(logEntry: LogEntry): void {
   if (logEntry.consumedQuantity <= 0) {
-    throw new Error("Consumed quantity must be greater than 0");
+    throw new DomainError(
+      "INVALID_CONSUMED_QUANTITY",
+      "Consumed quantity must be greater than 0",
+    );
   }
 
-  if (Number.isNaN(Date.parse(logEntry.occurredAt))) {
-    throw new Error("occurredAt must be a valid ISO date-time string");
+  if (!isValidIsoDateTime(logEntry.occurredAt)) {
+    throw new DomainError(
+      "INVALID_ISO_DATETIME",
+      "occurredAt must be a valid ISO 8601 date-time string",
+    );
   }
 }
 
 export function assertValidMacros(macros: Macros): void {
   if (macros.carbohydrates < 0 || macros.proteins < 0 || macros.fats < 0) {
-    throw new Error("Macro values cannot be negative");
+    throw new DomainError(
+      "INVALID_MACRO_VALUES",
+      "Macro values cannot be negative",
+    );
   }
 }
 
@@ -33,6 +50,9 @@ export function assertPositiveQuantity(
   fieldName: string,
 ): void {
   if (quantity <= 0) {
-    throw new Error(`${fieldName} must be greater than 0`);
+    throw new DomainError(
+      "INVALID_CONSUMED_QUANTITY",
+      `${fieldName} must be greater than 0`,
+    );
   }
 }

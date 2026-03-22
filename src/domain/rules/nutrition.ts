@@ -1,4 +1,5 @@
 import type { FoodItem, LogEntry, Macros, NutritionTotals } from "../models";
+import { DomainError } from "../errors";
 import {
   assertPositiveQuantity,
   assertValidFoodItem,
@@ -32,7 +33,8 @@ export function calculateLoggedNutrition(
   logEntry: LogEntry,
 ): NutritionTotals {
   if (foodItem.id !== logEntry.foodItemId) {
-    throw new Error(
+    throw new DomainError(
+      "FOOD_ITEM_ID_MISMATCH",
       "Log entry foodItemId does not match the provided food item",
     );
   }
