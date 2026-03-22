@@ -1,16 +1,16 @@
 import type { FoodItem, LogEntry, Macros, NutritionTotals } from "../models";
+import {
+  assertPositiveQuantity,
+  assertValidFoodItem,
+  assertValidMacros,
+} from "./validation";
 
 export function scaleMacros(
   foodItem: FoodItem,
   consumedQuantity: number,
 ): Macros {
-  if (foodItem.baseQuantity <= 0) {
-    throw new Error("Food item baseQuantity must be greater than 0");
-  }
-
-  if (consumedQuantity <= 0) {
-    throw new Error("Consumed quantity must be greater than 0");
-  }
+  assertValidFoodItem(foodItem);
+  assertPositiveQuantity(consumedQuantity, "Consumed quantity");
 
   const factor = consumedQuantity / foodItem.baseQuantity;
 
@@ -22,9 +22,7 @@ export function scaleMacros(
 }
 
 export function calculateCaloriesFromMacros(macros: Macros): number {
-  if (macros.carbohydrates < 0 || macros.proteins < 0 || macros.fats < 0) {
-    throw new Error("Macro values cannot be negative");
-  }
+  assertValidMacros(macros);
 
   return macros.carbohydrates * 4 + macros.proteins * 4 + macros.fats * 9;
 }
