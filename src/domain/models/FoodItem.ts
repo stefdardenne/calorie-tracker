@@ -1,11 +1,9 @@
+import type { Macros } from "./macros";
 import type { Unit } from "./unit";
 
-export type FoodItem = {
+export type FoodItem = Macros & {
   id: string;
   name: string;
   unit: Unit;
   baseQuantity: number;
-  carbohydrates: number;
-  proteins: number;
-  fats: number;
 };
