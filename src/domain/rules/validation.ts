@@ -1,6 +1,6 @@
 import type { FoodItem, LogEntry, Macros } from "../models";
 import { DomainError } from "../errors";
-import { isValidIsoDateTime } from "./isoDateTimeValidator";
+import { isValidIsoDateTime } from "./isoDateTimeValidator/isoDateTimeValidator";
 
 export function assertValidFoodItem(foodItem: FoodItem): void {
   if (foodItem.name.trim().length === 0) {

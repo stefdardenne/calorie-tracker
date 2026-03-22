@@ -1,7 +1,7 @@
-import type { LogEntry } from "../../domain/models";
-import { DomainError } from "../../domain/errors";
-import { assertValidLogEntry } from "../../domain/rules/validation";
-import type { FoodItemRepository, LogEntryRepository } from "../ports";
+import type { LogEntry } from "../../../domain/models";
+import { DomainError } from "../../../domain/errors";
+import { assertValidLogEntry } from "../../../domain/rules/validation";
+import type { FoodItemRepository, LogEntryRepository } from "../../ports";
 
 export function logFoodItemUseCase(
   foodItemRepository: FoodItemRepository,

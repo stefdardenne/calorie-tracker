@@ -1,5 +1,5 @@
-import type { IsoDateTime, LogEntry } from "../../domain/models";
-import type { LogEntryRepository } from "../ports";
+import type { IsoDateTime, LogEntry } from "../../../domain/models";
+import type { LogEntryRepository } from "../../ports";
 
 function toDayRange(date: Date): { from: IsoDateTime; to: IsoDateTime } {
   const startOfLocalDay = new Date(

@@ -1,7 +1,7 @@
-import type { LogEntry, NutritionTotals } from "../../domain/models";
-import { DomainError } from "../../domain/errors";
-import { calculateLoggedNutrition } from "../../domain/rules/nutrition";
-import type { FoodItemRepository } from "../ports";
+import type { LogEntry, NutritionTotals } from "../../../domain/models";
+import { DomainError } from "../../../domain/errors";
+import { calculateLoggedNutrition } from "../../../domain/rules/nutrition/nutrition";
+import type { FoodItemRepository } from "../../ports";
 
 export function getLoggedNutritionForEntryUseCase(
   repository: FoodItemRepository,

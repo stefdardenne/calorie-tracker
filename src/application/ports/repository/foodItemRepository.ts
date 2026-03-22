@@ -1,4 +1,4 @@
-import type { FoodItem } from "../../domain/models";
+import type { FoodItem } from "../../../domain/models";
 
 export interface FoodItemRepository {
   create(foodItem: FoodItem): Promise<void>;

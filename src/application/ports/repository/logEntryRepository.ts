@@ -1,4 +1,4 @@
-import type { IsoDateTime, LogEntry } from "../../domain/models";
+import type { IsoDateTime, LogEntry } from "../../../domain/models";
 
 export interface LogEntryRepository {
   create(logEntry: LogEntry): Promise<void>;

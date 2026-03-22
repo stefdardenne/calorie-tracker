@@ -1,2 +1,2 @@
-export type { FoodItemRepository } from "./foodItemRepository";
-export type { LogEntryRepository } from "./logEntryRepository";
+export type { FoodItemRepository } from "./repository/foodItemRepository";
+export type { LogEntryRepository } from "./repository/logEntryRepository";

@@ -1,10 +1,10 @@
-import type { FoodItem, LogEntry, Macros, NutritionTotals } from "../models";
-import { DomainError } from "../errors";
+import type { FoodItem, LogEntry, Macros, NutritionTotals } from "../../models";
+import { DomainError } from "../../errors";
 import {
   assertPositiveQuantity,
   assertValidFoodItem,
   assertValidMacros,
-} from "./validation";
+} from "../validation";
 
 export function scaleMacros(
   foodItem: FoodItem,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { FoodItem, LogEntry, Macros } from "../models";
+import type { FoodItem, LogEntry, Macros } from "../../models";
 import {
   calculateCaloriesFromMacros,
   calculateLoggedNutrition,
