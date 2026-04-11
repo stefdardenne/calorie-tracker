@@ -34,14 +34,32 @@ app.innerHTML = `
 
   <div id="foods-list">
     <h2>Saved Foods</h2>
-    <ul id="foods"></ul>
+    <p id="foods-empty-state">No foods yet</p>
+    <table id="foods-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Base Quantity</th>
+          <th>Unit</th>
+          <th>Carbs</th>
+          <th>Protein</th>
+          <th>Fat</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="foods"></tbody>
+    </table>
   </div>
 `;
 
 const foodForm = document.querySelector<HTMLFormElement>("#food-form")!;
 const foodStatus =
   document.querySelector<HTMLParagraphElement>("#food-status")!;
-const foodsUl = document.querySelector<HTMLUListElement>("#foods")!;
+const foodsEmptyState =
+  document.querySelector<HTMLParagraphElement>("#foods-empty-state")!;
+const foodsTable = document.querySelector<HTMLTableElement>("#foods-table")!;
+const foodsTableBody =
+  document.querySelector<HTMLTableSectionElement>("#foods")!;
 
 function setStatus(message: string, isError: boolean = false) {
   foodStatus.textContent = message;
@@ -51,13 +69,17 @@ function setStatus(message: string, isError: boolean = false) {
 async function refreshFoods() {
   const foods = await composition.listFoodItems();
   if (foods.length === 0) {
-    foodsUl.innerHTML = "<li>No foods yet</li>";
+    foodsTable.hidden = true;
+    foodsEmptyState.hidden = false;
+    foodsTableBody.innerHTML = "";
     return;
   }
-  foodsUl.innerHTML = foods
+
+  foodsEmptyState.hidden = true;
+  foodsTableBody.innerHTML = foods
     .map(
       (food) =>
-        `<li id="food-${food.id}"><strong>${food.name}</strong> - ${food.baseQuantity}${food.unit} (P: ${food.proteins}g, C: ${food.carbohydrates}g, F: ${food.fats}g) <button class="delete-btn" data-id="${food.id}">Delete</button></li>`,
+        `<tr id="food-${food.id}"><td>${food.name}</td><td>${food.baseQuantity}</td><td>${food.unit}</td><td>${food.carbohydrates}g</td><td>${food.proteins}g</td><td>${food.fats}g</td><td><button class="delete-btn" data-id="${food.id}">Delete</button></td></tr>`,
     )
     .join("");
 
@@ -72,6 +94,8 @@ async function refreshFoods() {
       }
     });
   });
+
+  foodsTable.hidden = false;
 }
 
 foodForm.addEventListener("submit", async (e) => {
