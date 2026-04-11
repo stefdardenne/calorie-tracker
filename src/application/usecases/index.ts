@@ -1,5 +1,5 @@
-export { createFoodItemUseCase } from "./createFoodItem";
-export { getLoggedNutritionForEntryUseCase } from "./getLoggedNutritionForEntry";
-export { listFoodItemsUseCase } from "./listFoodItems";
-export { listLogEntriesForDayUseCase } from "./listLogEntriesForDay";
-export { logFoodItemUseCase } from "./logFoodItem";
+export { createFoodItemUseCase } from "./createFoodItem/usecase";
+export { getLoggedNutritionForEntryUseCase } from "./getLoggedNutritionForEntry/usecase";
+export { listFoodItemsUseCase } from "./listFoodItems/usecase";
+export { listLogEntriesForDayUseCase } from "./listLogEntriesForDay/usecase";
+export { logFoodItemUseCase } from "./logFoodItem/usecase";

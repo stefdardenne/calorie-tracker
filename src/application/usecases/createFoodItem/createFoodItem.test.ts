@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { FoodItem } from "../../../domain/models";
 import { DomainError } from "../../../domain/errors";
 import type { FoodItemRepository } from "../../ports";
-import { createFoodItemUseCase } from "./index";
+import { createFoodItemUseCase } from "./usecase";
 
 const chickenPer100g: FoodItem = {
   id: "food-1",

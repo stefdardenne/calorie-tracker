@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { FoodItem, LogEntry } from "../../../domain/models";
 import { DomainError } from "../../../domain/errors";
-import { logFoodItemUseCase } from "./index";
+import { logFoodItemUseCase } from "./usecase";
 
 const chickenPer100g: FoodItem = {
   id: "food-1",

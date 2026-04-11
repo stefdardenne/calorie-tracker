@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import type { LogEntry } from "../../../domain/models";
 import type { LogEntryRepository } from "../../ports";
-import { listLogEntriesForDayUseCase } from "./index";
+import { listLogEntriesForDayUseCase } from "./usecase";
 
 const validLogEntry: LogEntry = {
   id: "log-1",
