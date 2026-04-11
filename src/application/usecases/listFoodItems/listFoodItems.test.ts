@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import type { FoodItem } from "../../../domain/models";
-import type { FoodItemRepository } from "../../ports";
+import { createMockFoodItemRepository } from "../testHelpers/createMockFoodItemRepository";
 import { listFoodItemsUseCase } from "./usecase";
 
 const chickenPer100g: FoodItem = {
@@ -16,11 +16,10 @@ const chickenPer100g: FoodItem = {
 
 describe("listFoodItemsUseCase", () => {
   it("returns all food items from repository", async () => {
-    const repository: FoodItemRepository = {
-      create: vi.fn(async () => undefined),
+    const repository = createMockFoodItemRepository({
       findById: vi.fn(async () => chickenPer100g),
       listAll: vi.fn(async () => [chickenPer100g]),
-    };
+    });
 
     const listFoodItems = listFoodItemsUseCase(repository);
 

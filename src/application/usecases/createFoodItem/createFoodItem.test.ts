@@ -1,8 +1,8 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import type { FoodItem } from "../../../domain/models";
 import { DomainError } from "../../../domain/errors";
-import type { FoodItemRepository } from "../../ports";
+import { createMockFoodItemRepository } from "../testHelpers/createMockFoodItemRepository";
 import { createFoodItemUseCase } from "./usecase";
 
 const chickenPer100g: FoodItem = {
@@ -17,11 +17,7 @@ const chickenPer100g: FoodItem = {
 
 describe("createFoodItemUseCase", () => {
   it("creates a valid food item", async () => {
-    const repository: FoodItemRepository = {
-      create: vi.fn(async () => undefined),
-      findById: vi.fn(),
-      listAll: vi.fn(),
-    };
+    const repository = createMockFoodItemRepository();
 
     const createFoodItem = createFoodItemUseCase(repository);
 
@@ -32,11 +28,7 @@ describe("createFoodItemUseCase", () => {
   });
 
   it("throws for invalid food item and does not persist", async () => {
-    const repository: FoodItemRepository = {
-      create: vi.fn(async () => undefined),
-      findById: vi.fn(),
-      listAll: vi.fn(),
-    };
+    const repository = createMockFoodItemRepository();
 
     const createFoodItem = createFoodItemUseCase(repository);
 

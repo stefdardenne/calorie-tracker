@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { FoodItem, LogEntry } from "../../../domain/models";
 import { DomainError } from "../../../domain/errors";
+import { createMockFoodItemRepository } from "../testHelpers/createMockFoodItemRepository";
 import { logFoodItemUseCase } from "./usecase";
 
 const chickenPer100g: FoodItem = {
@@ -22,13 +23,12 @@ const validLogEntry: LogEntry = {
 };
 
 describe("logFoodItemUseCase", () => {
-  const foodItemRepository = {
-    create: vi.fn(async () => undefined),
+  const foodItemRepository = createMockFoodItemRepository({
     findById: vi.fn<(id: string) => Promise<FoodItem | null>>(
       async () => chickenPer100g,
     ),
     listAll: vi.fn(async () => [chickenPer100g]),
-  };
+  });
 
   const logEntryRepository = {
     create: vi.fn(async () => undefined),

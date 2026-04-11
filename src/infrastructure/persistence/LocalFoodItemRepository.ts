@@ -31,4 +31,9 @@ export class LocalFoodItemRepository implements FoodItemRepository {
     }
     return items;
   }
+
+  async delete(id: string): Promise<void> {
+    const key = `${STORAGE_KEY_PREFIX}${id}`;
+    localStorage.removeItem(key);
+  }
 }

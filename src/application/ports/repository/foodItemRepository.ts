@@ -4,4 +4,5 @@ export interface FoodItemRepository {
   create(foodItem: FoodItem): Promise<void>;
   findById(id: string): Promise<FoodItem | null>;
   listAll(): Promise<FoodItem[]>;
+  delete(id: string): Promise<void>;
 }

@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import type { FoodItem, LogEntry } from "../../../domain/models";
 import { DomainError } from "../../../domain/errors";
-import type { FoodItemRepository } from "../../ports";
+import { createMockFoodItemRepository } from "../testHelpers/createMockFoodItemRepository";
 import { getLoggedNutritionForEntryUseCase } from "./usecase";
 
 const chickenPer100g: FoodItem = {
@@ -24,11 +24,10 @@ const validLogEntry: LogEntry = {
 
 describe("getLoggedNutritionForEntryUseCase", () => {
   it("returns calculated nutrition when the food item exists", async () => {
-    const repository: FoodItemRepository = {
-      create: vi.fn(async () => undefined),
+    const repository = createMockFoodItemRepository({
       findById: vi.fn(async () => chickenPer100g),
       listAll: vi.fn(async () => [chickenPer100g]),
-    };
+    });
 
     const getLoggedNutritionForEntry =
       getLoggedNutritionForEntryUseCase(repository);
@@ -42,11 +41,7 @@ describe("getLoggedNutritionForEntryUseCase", () => {
   });
 
   it("throws when the linked food item does not exist", async () => {
-    const repository: FoodItemRepository = {
-      create: vi.fn(async () => undefined),
-      findById: vi.fn(async () => null),
-      listAll: vi.fn(async () => []),
-    };
+    const repository = createMockFoodItemRepository();
 
     const getLoggedNutritionForEntry =
       getLoggedNutritionForEntryUseCase(repository);

@@ -1,6 +1,7 @@
 import type { FoodItemRepository, LogEntryRepository } from "./ports";
 import {
   createFoodItemUseCase,
+  deleteFoodItemUseCase,
   getLoggedNutritionForEntryUseCase,
   listFoodItemsUseCase,
   listLogEntriesForDayUseCase,
@@ -11,6 +12,7 @@ import { LocalLogEntryRepository } from "../infrastructure/persistence/LocalLogE
 
 export interface CompositionRoot {
   createFoodItem: ReturnType<typeof createFoodItemUseCase>;
+  deleteFoodItem: ReturnType<typeof deleteFoodItemUseCase>;
   listFoodItems: ReturnType<typeof listFoodItemsUseCase>;
   logFoodItem: ReturnType<typeof logFoodItemUseCase>;
   listLogEntriesForDay: ReturnType<typeof listLogEntriesForDayUseCase>;
@@ -25,6 +27,7 @@ export function createCompositionRoot(
 ): CompositionRoot {
   return {
     createFoodItem: createFoodItemUseCase(foodItemRepository),
+    deleteFoodItem: deleteFoodItemUseCase(foodItemRepository),
     listFoodItems: listFoodItemsUseCase(foodItemRepository),
     logFoodItem: logFoodItemUseCase(foodItemRepository, logEntryRepository),
     listLogEntriesForDay: listLogEntriesForDayUseCase(logEntryRepository),
