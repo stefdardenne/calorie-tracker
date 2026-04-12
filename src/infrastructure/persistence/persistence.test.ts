@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { FoodItem } from "../../domain/models";
+import type { FoodItem, Meal } from "../../domain/models";
 import { LocalFoodItemRepository } from "./LocalFoodItemRepository";
 import { LocalLogEntryRepository } from "./LocalLogEntryRepository";
+import { LocalMealRepository } from "./LocalMealRepository";
 
 const chickenPer100g: FoodItem = {
   id: "food-1",
@@ -171,5 +172,90 @@ describe("LocalLogEntryRepository", () => {
 
     expect(results).toHaveLength(1);
     expect(results[0]).toEqual(logEntry);
+  });
+});
+
+describe("LocalMealRepository", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    vi.clearAllMocks();
+  });
+
+  const sampleMeal: Meal = {
+    id: "meal-1",
+    name: "Lunch",
+    createdAt: "2026-04-12T12:00:00.000Z",
+    items: [
+      {
+        foodItemId: "food-1",
+        consumedQuantity: 150,
+      },
+    ],
+  };
+
+  it("stores and retrieves a meal", async () => {
+    const repository = new LocalMealRepository();
+    await repository.create(sampleMeal);
+
+    const meal = await repository.findById("meal-1");
+
+    expect(meal).toEqual(sampleMeal);
+  });
+
+  it("lists all stored meals", async () => {
+    const repository = new LocalMealRepository();
+
+    const secondMeal: Meal = {
+      id: "meal-2",
+      name: "Dinner",
+      createdAt: "2026-04-12T18:00:00.000Z",
+      items: [
+        {
+          foodItemId: "food-1",
+          consumedQuantity: 100,
+        },
+      ],
+    };
+
+    await repository.create(sampleMeal);
+    await repository.create(secondMeal);
+
+    const meals = await repository.listAll();
+
+    expect(meals).toHaveLength(2);
+    expect(meals).toContainEqual(sampleMeal);
+    expect(meals).toContainEqual(secondMeal);
+  });
+
+  it("deletes a stored meal", async () => {
+    const repository = new LocalMealRepository();
+    await repository.create(sampleMeal);
+
+    await repository.delete("meal-1");
+
+    const meal = await repository.findById("meal-1");
+    expect(meal).toBeNull();
+  });
+
+  it("updates a stored meal", async () => {
+    const repository = new LocalMealRepository();
+    await repository.create(sampleMeal);
+
+    const updatedMeal: Meal = {
+      ...sampleMeal,
+      name: "Updated Lunch",
+      items: [
+        ...sampleMeal.items,
+        {
+          foodItemId: "food-2",
+          consumedQuantity: 200,
+        },
+      ],
+    };
+
+    await repository.update(updatedMeal);
+
+    const retrieved = await repository.findById("meal-1");
+    expect(retrieved).toEqual(updatedMeal);
   });
 });

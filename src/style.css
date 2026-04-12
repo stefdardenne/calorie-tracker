@@ -91,7 +91,9 @@ select {
 }
 
 .food-form button,
-.foods-table button {
+.foods-table button,
+.modal-actions button,
+.meals-toolbar button {
   width: fit-content;
   padding: 0.65rem 1rem;
   border: 0;
@@ -123,9 +125,145 @@ select {
   text-align: left;
 }
 
+.meal-totals {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #f8fafc;
+}
+
+.meal-totals p {
+  margin: 0.35rem 0;
+}
+
+.meal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.meals-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.meal-mode {
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: #e0e7ff;
+  color: #3730a3;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.meal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.inline-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button-secondary {
+  background: #475569 !important;
+}
+
+.button-danger {
+  background: #b91c1c !important;
+}
+
+.crud-modal {
+  border: 0;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  width: min(460px, 92vw);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.3);
+}
+
+.crud-modal::backdrop {
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.crud-modal h3 {
+  margin-top: 0;
+}
+
+.modal-field {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1rem 0;
+}
+
+.modal-field input,
+.modal-field select {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #bcccdc;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.modal-cancel {
+  background: #64748b !important;
+  color: #fff;
+}
+
+.modal-cancel:hover {
+  background: #475569 !important;
+}
+
+.modal-confirm {
+  background: #0f766e !important;
+  color: #fff;
+}
+
+.modal-confirm:hover {
+  background: #0d9488 !important;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .foods-table th {
   color: #52606d;
   font-size: 0.9rem;
+}
+
+.table-sort {
+  padding: 0;
+  border: 0;
+  background: transparent !important;
+  color: #52606d;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.foods-table th .table-sort {
+  color: #52606d;
+}
+
+.table-sort:hover {
+  color: #1f2933;
+}
+
+.table-sort:focus-visible {
+  outline: 2px solid #d97706;
+  outline-offset: 2px;
 }
 
 @media (max-width: 800px) {

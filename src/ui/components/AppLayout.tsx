@@ -32,6 +32,18 @@ export function AppLayout() {
                 Foods
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "sidebar__link sidebar__link--active"
+                    : "sidebar__link"
+                }
+                to="/meals"
+              >
+                Meals
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </aside>

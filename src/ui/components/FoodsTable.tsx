@@ -1,4 +1,5 @@
 import type { FoodItem } from "../../domain/models";
+import { calculateCaloriesFromMacros } from "../../domain/rules/nutrition/nutrition";
 
 interface FoodsTableProps {
   foods: FoodItem[];
@@ -27,6 +28,7 @@ export function FoodsTable({ foods, onDelete }: FoodsTableProps) {
             <th>Carbs</th>
             <th>Protein</th>
             <th>Fat</th>
+            <th>Total kcal</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -39,6 +41,13 @@ export function FoodsTable({ foods, onDelete }: FoodsTableProps) {
               <td>{food.carbohydrates}g</td>
               <td>{food.proteins}g</td>
               <td>{food.fats}g</td>
+              <td>
+                {calculateCaloriesFromMacros({
+                  carbohydrates: food.carbohydrates,
+                  proteins: food.proteins,
+                  fats: food.fats,
+                }).toFixed(1)}
+              </td>
               <td>
                 <button onClick={() => onDelete(food.id)} type="button">
                   Delete

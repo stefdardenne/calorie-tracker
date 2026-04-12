@@ -1,4 +1,4 @@
-import type { FoodItem, LogEntry, Macros } from "../models";
+import type { FoodItem, LogEntry, Macros, Meal } from "../models";
 import { DomainError } from "../errors";
 import { isValidIsoDateTime } from "./isoDateTimeValidator/isoDateTimeValidator";
 
@@ -43,6 +43,30 @@ export function assertValidMacros(macros: Macros): void {
       "Macro values cannot be negative",
     );
   }
+}
+
+export function assertValidMeal(meal: Meal): void {
+  if (meal.name.trim().length === 0) {
+    throw new DomainError("INVALID_MEAL_NAME", "Meal name is required");
+  }
+
+  if (!isValidIsoDateTime(meal.createdAt)) {
+    throw new DomainError(
+      "INVALID_ISO_DATETIME",
+      "createdAt must be a valid ISO 8601 date-time string",
+    );
+  }
+
+  if (meal.items.length === 0) {
+    throw new DomainError(
+      "INVALID_MEAL_ITEMS",
+      "Meal must include at least one item",
+    );
+  }
+
+  meal.items.forEach((item) => {
+    assertPositiveQuantity(item.consumedQuantity, "Consumed quantity");
+  });
 }
 
 export function assertPositiveQuantity(

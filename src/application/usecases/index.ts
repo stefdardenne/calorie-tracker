@@ -1,6 +1,10 @@
 export { createFoodItemUseCase } from "./createFoodItem/usecase";
+export { createMealUseCase } from "./createMeal/usecase";
+export { deleteMealUseCase } from "./deleteMeal/usecase";
 export { deleteFoodItemUseCase } from "./deleteFoodItem/usecase";
 export { getLoggedNutritionForEntryUseCase } from "./getLoggedNutritionForEntry/usecase";
 export { listFoodItemsUseCase } from "./listFoodItems/usecase";
 export { listLogEntriesForDayUseCase } from "./listLogEntriesForDay/usecase";
+export { listMealsUseCase } from "./listMeals/usecase";
 export { logFoodItemUseCase } from "./logFoodItem/usecase";
+export { updateMealUseCase } from "./updateMeal/usecase";
