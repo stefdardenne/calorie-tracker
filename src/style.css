@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: linear-gradient(180deg, #f5f1e8 0%, #f9f8f4 100%);
+  color: #1f2933;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.sidebar {
+  padding: 2rem 1.5rem;
+  background: #1f2933;
+  color: #f8fafc;
+}
+
+.sidebar__title {
+  margin: 0 0 2rem;
+  font-size: 1.5rem;
+}
+
+.sidebar__nav {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar__link {
+  display: inline-block;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: #cbd5e1;
+}
+
+.sidebar__link--active,
+.sidebar__link:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+.page-content {
+  padding: 2rem;
+}
+
+.page-section,
+.foods-page {
+  max-width: 960px;
+}
+
+.panel {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid #d9e2ec;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.food-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.food-form label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.food-form input,
+.food-form select {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #bcccdc;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.food-form button,
+.foods-table button {
+  width: fit-content;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: #d97706;
+  color: #fff;
+  cursor: pointer;
+}
+
+.status {
+  min-height: 1.5rem;
+  margin: 0 0 1rem;
+  color: #166534;
+}
+
+.status--error {
+  color: #b91c1c;
+}
+
+.foods-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.foods-table th,
+.foods-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.foods-table th {
+  color: #52606d;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 800px) {
+  #app {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    padding-bottom: 1rem;
+  }
+}
