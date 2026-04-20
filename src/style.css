@@ -118,6 +118,32 @@ select {
   border-collapse: collapse;
 }
 
+.summary-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.summary-metric {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #f8fafc;
+}
+
+.summary-metric strong {
+  display: block;
+  font-size: 1.25rem;
+}
+
+.summary-metric__label {
+  display: block;
+  color: #52606d;
+  font-size: 0.85rem;
+}
+
 .foods-table th,
 .foods-table td {
   padding: 0.75rem;

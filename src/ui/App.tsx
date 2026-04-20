@@ -16,7 +16,7 @@ export function App({ composition }: AppProps) {
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage composition={composition} />} />
           <Route
             path="/foods"
             element={<FoodsPage composition={composition} />}
