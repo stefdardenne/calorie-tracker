@@ -91,6 +91,7 @@ export function MealsPage({ composition }: MealsPageProps) {
         foodItemId: selectedFood.id,
         consumedQuantity,
         occurredAt: new Date().toISOString(),
+        mealType: "lunch",
       };
 
       await composition.getLoggedNutritionForEntry(logEntry);
@@ -219,6 +220,7 @@ export function MealsPage({ composition }: MealsPageProps) {
           foodItemId: item.foodItemId,
           consumedQuantity: item.consumedQuantity,
           occurredAt: new Date().toISOString(),
+          mealType: "lunch",
         });
         return total + nutrition.calories;
       } catch {

@@ -20,6 +20,7 @@ const validLogEntry: LogEntry = {
   foodItemId: "food-1",
   consumedQuantity: 150,
   occurredAt: "2026-03-22T12:00:00.000Z",
+  mealType: "lunch",
 };
 
 describe("logFoodItemUseCase", () => {
@@ -32,6 +33,8 @@ describe("logFoodItemUseCase", () => {
 
   const logEntryRepository = {
     create: vi.fn(async () => undefined),
+    update: vi.fn(async () => undefined),
+    delete: vi.fn(async () => undefined),
     listByDateRange: vi.fn(async () => []),
     listByFoodItemId: vi.fn(async () => []),
   };

@@ -96,6 +96,7 @@ describe("LocalLogEntryRepository", () => {
       foodItemId: "food-1",
       consumedQuantity: 150,
       occurredAt: "2026-03-22T12:00:00.000Z" as const,
+      mealType: "breakfast" as const,
     };
 
     await repository.create(logEntry);
@@ -117,6 +118,7 @@ describe("LocalLogEntryRepository", () => {
       foodItemId: "food-1",
       consumedQuantity: 150,
       occurredAt: "2026-03-22T12:00:00.000Z" as const,
+      mealType: "lunch" as const,
     };
 
     await repository.create(logEntry);
@@ -137,6 +139,7 @@ describe("LocalLogEntryRepository", () => {
       foodItemId: "food-1",
       consumedQuantity: 150,
       occurredAt: "2026-03-22T12:00:00.000Z" as const,
+      mealType: "lunch" as const,
     };
 
     const logEntry2 = {
@@ -144,6 +147,7 @@ describe("LocalLogEntryRepository", () => {
       foodItemId: "food-2",
       consumedQuantity: 200,
       occurredAt: "2026-03-22T13:00:00.000Z" as const,
+      mealType: "lunch" as const,
     };
 
     await repository.create(logEntry1);
@@ -163,6 +167,7 @@ describe("LocalLogEntryRepository", () => {
       foodItemId: "food-1",
       consumedQuantity: 150,
       occurredAt: "2026-03-22T12:00:00.000Z" as const,
+      mealType: "lunch" as const,
     };
 
     await repository1.create(logEntry);

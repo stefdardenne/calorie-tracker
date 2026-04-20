@@ -4,6 +4,7 @@ import type { CompositionRoot } from "../application/composition";
 import { AppLayout } from "./components/AppLayout";
 import { FoodsPage } from "./pages/FoodsPage";
 import { HomePage } from "./pages/HomePage";
+import { LogsPage } from "./pages/LogsPage";
 import { MealsPage } from "./pages/MealsPage.tsx";
 
 interface AppProps {
@@ -23,6 +24,10 @@ export function App({ composition }: AppProps) {
           <Route
             path="/meals"
             element={<MealsPage composition={composition} />}
+          />
+          <Route
+            path="/logs"
+            element={<LogsPage composition={composition} />}
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

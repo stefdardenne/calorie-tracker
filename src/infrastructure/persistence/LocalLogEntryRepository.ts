@@ -9,6 +9,16 @@ export class LocalLogEntryRepository implements LogEntryRepository {
     localStorage.setItem(key, JSON.stringify(logEntry));
   }
 
+  async update(logEntry: LogEntry): Promise<void> {
+    const key = `${STORAGE_KEY_PREFIX}${logEntry.id}`;
+    localStorage.setItem(key, JSON.stringify(logEntry));
+  }
+
+  async delete(id: string): Promise<void> {
+    const key = `${STORAGE_KEY_PREFIX}${id}`;
+    localStorage.removeItem(key);
+  }
+
   async listByDateRange(
     from: IsoDateTime,
     to: IsoDateTime,

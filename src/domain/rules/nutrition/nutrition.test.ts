@@ -78,6 +78,7 @@ describe("calculateLoggedNutrition", () => {
       foodItemId: "food-1",
       consumedQuantity: 150,
       occurredAt: "2026-03-22T12:00:00.000Z",
+      mealType: "lunch",
     };
 
     const result = calculateLoggedNutrition(chickenPer100g, logEntry);
@@ -96,6 +97,7 @@ describe("calculateLoggedNutrition", () => {
       foodItemId: "food-1",
       consumedQuantity: 87.5,
       occurredAt: "2026-03-22T12:30:00.000Z",
+      mealType: "breakfast",
     };
 
     const result = calculateLoggedNutrition(chickenPer100g, logEntry);
@@ -112,6 +114,7 @@ describe("calculateLoggedNutrition", () => {
       foodItemId: "food-2",
       consumedQuantity: 100,
       occurredAt: "2026-03-22T12:00:00.000Z",
+      mealType: "dinner",
     };
 
     expect(() =>

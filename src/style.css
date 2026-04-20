@@ -60,7 +60,7 @@ select {
 
 .page-section,
 .foods-page {
-  max-width: 960px;
+  width: 100%;
 }
 
 .panel {
@@ -264,6 +264,43 @@ button:disabled {
 .table-sort:focus-visible {
   outline: 2px solid #d97706;
   outline-offset: 2px;
+}
+
+.meal-type-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.meal-type-section h3 {
+  margin-top: 0;
+  color: #334155;
+}
+
+.meal-type-section:last-child {
+  border-bottom: none;
+}
+
+.meals-toolbar input[type="date"],
+.meals-toolbar select {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #bcccdc;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.logs-by-type {
+  margin-top: 1.5rem;
+}
+
+.foods-table tfoot {
+  background: #f8fafc;
+  font-weight: 600;
+}
+
+.foods-table tfoot td {
+  border-top: 2px solid #e5e7eb;
+  padding: 0.75rem;
 }
 
 @media (max-width: 800px) {
