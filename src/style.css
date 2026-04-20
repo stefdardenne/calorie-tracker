@@ -293,6 +293,27 @@ button:disabled {
   margin-top: 1.5rem;
 }
 
+.logs-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.logs-filters label {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 220px;
+}
+
+.logs-filters input,
+.logs-filters select {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #bcccdc;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
 .foods-table tfoot {
   background: #f8fafc;
   font-weight: 600;

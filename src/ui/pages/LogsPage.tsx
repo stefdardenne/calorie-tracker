@@ -10,6 +10,7 @@ interface LogsPageProps {
 }
 
 const MEAL_TYPES: MealType[] = ["breakfast", "lunch", "dinner", "snacks"];
+const ALL_MEAL_TYPES_FILTER = "all";
 type SortDirection = "asc" | "desc";
 type LogSortKey =
   | "food"
@@ -48,6 +49,10 @@ export function LogsPage({ composition }: LogsPageProps) {
   // Sorting state
   const [sortKey, setSortKey] = useState<LogSortKey>("mealType");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
+  const [mealTypeFilter, setMealTypeFilter] = useState<MealType | "all">(
+    ALL_MEAL_TYPES_FILTER,
+  );
+  const [foodSearchQuery, setFoodSearchQuery] = useState("");
 
   const foodLogDialogRef = useRef<HTMLDialogElement | null>(null);
   const mealLogDialogRef = useRef<HTMLDialogElement | null>(null);
@@ -260,8 +265,24 @@ export function LogsPage({ composition }: LogsPageProps) {
     }
   }
 
+  const filteredLogEntries = useMemo(() => {
+    const normalizedSearch = foodSearchQuery.trim().toLowerCase();
+
+    return logEntries.filter((entry) => {
+      const mealTypeMatches =
+        mealTypeFilter === ALL_MEAL_TYPES_FILTER ||
+        entry.mealType === mealTypeFilter;
+
+      const foodName = getFoodName(entry.foodItemId).toLowerCase();
+      const searchMatches =
+        normalizedSearch.length === 0 || foodName.includes(normalizedSearch);
+
+      return mealTypeMatches && searchMatches;
+    });
+  }, [foodSearchQuery, logEntries, mealTypeFilter, foods]);
+
   const sortedLogEntries = useMemo(() => {
-    const sorted = [...logEntries];
+    const sorted = [...filteredLogEntries];
     sorted.sort((left, right) => {
       const directionMultiplier = sortDirection === "asc" ? 1 : -1;
 
@@ -311,7 +332,7 @@ export function LogsPage({ composition }: LogsPageProps) {
       return 0;
     });
     return sorted;
-  }, [logEntries, sortDirection, sortKey, foods]);
+  }, [filteredLogEntries, sortDirection, sortKey, foods]);
 
   function toggleSort(column: LogSortKey): void {
     if (sortKey === column) {
@@ -330,7 +351,7 @@ export function LogsPage({ composition }: LogsPageProps) {
     return sortDirection === "asc" ? " \u2191" : " \u2193";
   }
 
-  const totalCalories = logEntries.reduce(
+  const totalCalories = sortedLogEntries.reduce(
     (sum, entry) => sum + getLoggedNutrition(entry).calories,
     0,
   );
@@ -375,9 +396,36 @@ export function LogsPage({ composition }: LogsPageProps) {
 
       <section className="panel">
         <h2>Logged Items</h2>
+        <div className="logs-filters">
+          <label>
+            Meal type
+            <select
+              value={mealTypeFilter}
+              onChange={(event) =>
+                setMealTypeFilter(event.target.value as MealType | "all")
+              }
+            >
+              <option value={ALL_MEAL_TYPES_FILTER}>All</option>
+              {MEAL_TYPES.map((type) => (
+                <option key={type} value={type}>
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Search food
+            <input
+              type="text"
+              value={foodSearchQuery}
+              onChange={(event) => setFoodSearchQuery(event.target.value)}
+              placeholder="e.g. chicken"
+            />
+          </label>
+        </div>
         <p>Total: {totalCalories.toFixed(0)} kcal</p>
 
-        {logEntries.length === 0 ? (
+        {sortedLogEntries.length === 0 ? (
           <p>No items logged for this date</p>
         ) : (
           <table className="foods-table">
