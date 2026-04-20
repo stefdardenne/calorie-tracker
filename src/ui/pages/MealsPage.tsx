@@ -137,6 +137,32 @@ export function MealsPage({ composition }: MealsPageProps) {
     setIsError(false);
   }
 
+  async function handleDuplicateSavedMeal(meal: Meal): Promise<void> {
+    try {
+      const duplicateMeal: Meal = {
+        id: `meal-${Date.now()}`,
+        name: `${meal.name} (Copy)`,
+        createdAt: new Date().toISOString(),
+        items: meal.items.map((item) => ({
+          foodItemId: item.foodItemId,
+          consumedQuantity: item.consumedQuantity,
+        })),
+      };
+
+      await composition.createMeal(duplicateMeal);
+      await refreshSavedMeals();
+      setStatus("Meal duplicated");
+      setIsError(false);
+    } catch (error) {
+      const message =
+        error instanceof DomainError
+          ? `${error.code}: ${error.message}`
+          : String(error);
+      setStatus(message);
+      setIsError(true);
+    }
+  }
+
   function openCreateMealModal(): void {
     setModalMode("create");
     resetMealDraft();
@@ -380,6 +406,15 @@ export function MealsPage({ composition }: MealsPageProps) {
                       type="button"
                     >
                       Edit
+                    </button>
+                    <button
+                      className="button-secondary"
+                      onClick={() => {
+                        void handleDuplicateSavedMeal(meal);
+                      }}
+                      type="button"
+                    >
+                      Duplicate
                     </button>
                     <button
                       className="button-danger"
