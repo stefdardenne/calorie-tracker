@@ -1,4 +1,4 @@
-export type { FoodItem } from "./foodItem";
+export type { FoodItem } from "./FoodItem";
 export type { IsoDateTime } from "./isoDateTime";
 export type { LogEntry, MealType } from "./logEntry";
 export type { Macros } from "./macros";
