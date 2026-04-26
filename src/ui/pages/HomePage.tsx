@@ -117,7 +117,9 @@ export function HomePage({ composition }: HomePageProps) {
   const todayDateKey = toDateKey(new Date());
 
   const todayCalories = useMemo(() => {
-    return dailyCalories.find((day) => day.dateKey === todayDateKey)?.calories ?? 0;
+    return (
+      dailyCalories.find((day) => day.dateKey === todayDateKey)?.calories ?? 0
+    );
   }, [dailyCalories, todayDateKey]);
 
   const weekCalories = useMemo(() => {
@@ -146,10 +148,15 @@ export function HomePage({ composition }: HomePageProps) {
         </div>
 
         {isLoading ? <p>Loading summary...</p> : null}
-        {errorMessage ? <p className="status status--error">{errorMessage}</p> : null}
+        {errorMessage ? (
+          <p className="status status--error">{errorMessage}</p>
+        ) : null}
 
         {!isLoading && !errorMessage ? (
-          <table className="foods-table" aria-label="Daily calories for the last 7 days">
+          <table
+            className="foods-table"
+            aria-label="Daily calories for the last 7 days"
+          >
             <thead>
               <tr>
                 <th>Date</th>
